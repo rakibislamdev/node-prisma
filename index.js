@@ -1,16 +1,21 @@
-require('dotenv').config();
+const cookieParser = require('cookie-parser');
 const express = require('express')
-const app = express()
-const port = 3000
+
+require('dotenv').config();
+const app = express();
+
+// Regular middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Cookie middleware
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/about', (req, res) => {
-    res.send('About page');
-});
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server started at http://localhost:${port}`);
+    console.log(`Server started at http://localhost:${process.env.PORT}`);
 })
