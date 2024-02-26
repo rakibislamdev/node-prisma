@@ -3,7 +3,7 @@ const prisma = require('../prisma/prisma');
 const cookieToken = require('../utils/cookieToken');
 
 // User signup
-exports.signUp = async (req, res, nex) => {
+exports.signup = async (req, res, nex) => {
     try {
         const { name, email, password } = req.body;
         // check
@@ -11,7 +11,6 @@ exports.signUp = async (req, res, nex) => {
             throw new Error('please provide all fields');
         }
 
-        // Insert new 
         const user = await prisma.user.create({
             data: {
                 name,
@@ -21,7 +20,7 @@ exports.signUp = async (req, res, nex) => {
         });
 
         // send user a token
-        cookieToken(use,res);
+        cookieToken(user, res);
 
     } catch (error) {
         throw new Error(error);
